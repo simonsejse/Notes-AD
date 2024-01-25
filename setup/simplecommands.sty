@@ -1,0 +1,191 @@
+% -------------------------------------------------
+%               ALL SIMPLE COMMANDS
+% -------------------------------------------------
+
+% -------------------------------------------------
+% `In other words` COMMAND DEFINITION
+% -------------------------------------------------
+% \ie{<text>}
+% 
+% This command provides a shortcut for "in other words", automatically 
+% formatting the argument in parentheses with "i.e., " at the beginning.
+%
+% Arguments:
+%  #1: The text that should follow "i.e., "
+%
+% Usage:
+%  \ie{only one potential change in ...}
+%
+% Example:
+%  A class should have only a single responsibility \ie{only one potential change in ...}
+% This would produce: A class should have only a single responsibility (i.e., only one potential change in ...)
+%
+% Version 1.0, last updated 19-06-2023
+\NewDocumentCommand\ie{m}{%
+(i.e., #1)\unskip
+}
+
+% -------------------------------------------------
+% Emphasise words
+% -------------------------------------------------
+% \newword{<text>}
+% 
+% This command provides a way to emphasize a particular word, automatically 
+% formatting the argument in bold text.
+%
+% Arguments:
+%  #1: The text that should be emphasized in bold.
+%
+% Usage:
+%  \newword{important term}
+%
+% Example:
+%  It is essential to understand the \newword{encapsulation} in OOP.
+% This would produce: It is essential to understand the **encapsulation** in OOP.
+%
+% Version 1.0, last updated 18-07-2023
+\NewDocumentCommand\newword{m}{\textbf{#1}}
+
+% -------------------------------------------------
+% Notice emphasis with a noticeable labor
+% -------------------------------------------------
+% \notice{<text>}
+% 
+% This command provides a way to highlight a particular notice or piece of information, automatically 
+% formatting the argument to start with "Notice: " in bold, followed by the emphasized text in italic.
+%
+% Arguments:
+%  #1: The text that should be highlighted as a notice.
+%
+% Usage:
+%  \notice{Important note here}
+%
+% Example:
+%  \notice{This is a very important point to remember.}
+% This would produce: **Notice:** *This is a very important point to remember.*
+%
+% Version 1.0, last updated 18-07-2023
+\NewDocumentCommand\notice{m}{\textbf{Notice:} \emph{#1}\par}
+
+
+% -------------------------------------------------
+% Commenting on the showcaseBoxCommand
+% -------------------------------------------------
+% \showcaseBoxCommand{<command_name>}{<arguments>}
+%
+% This command outputs the given LaTeX command along with its arguments, demonstrating its use. The command is presented in an itemized list, and each argument is processed individually for clarity.
+%
+% Arguments:
+% #1: The name of the LaTeX command.
+% #2: A comma-separated list of arguments to the command.
+%
+% Usage:
+% \showcaseBoxCommand{Command name}{Arguments}
+%
+% Example:
+% \showcaseBoxCommand{emph}{This is important}
+% This would produce:
+% Command used:
+% * \emph{This is important}
+%
+% Note: The command name should not include the backslash and the arguments should be separated by commas without spaces.
+%
+% Version 1.0, last updated 01-08-2023
+\usepackage{titlesec}
+
+\NewDocumentCommand{\showcaseCommand}{m m g}{%
+  Below is the command that is used:
+  \begin{itemize}[topsep=0pt, label=\color{light-gold}$\star$]
+    \item $\backslash$#1
+    \IfNoValueTF{#3}
+    {\ProcessArgs{#2}}
+    {\ProcessArgs{#2}{#3}}
+  \end{itemize}
+}
+
+\NewDocumentCommand{\ProcessArgs}{m g}{%
+   \forcsvlist{\ProcessArg}{#1}
+    \IfNoValueTF{#2}{%
+   
+    }{%
+        \begin{itemize}[topsep=0pt, nosep] 
+            \begingroup
+            \titleformat*{\subsubsection}{\normalfont\normalsize}
+            \titlespacing*{\subsubsection}{-47px}{1pt}{-2pt}
+            \subsubsection*{These are the descriptions of the parameters:}
+            \endgroup
+            \pairedProcess{#1}{#2}
+        \end{itemize}
+    }
+}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\pairedProcess}{mm}
+ {
+  \seq_set_from_clist:Nn \l_tmpa_seq { #1 }
+  \seq_set_from_clist:Nn \l_tmpb_seq { #2 }
+  \seq_mapthread_function:NNN \l_tmpa_seq \l_tmpb_seq \process_pair:nN
+ }
+
+\cs_new_protected:Nn \process_pair:nN
+ {
+  \item \newword{#1}:~\term{#2}
+ }
+\ExplSyntaxOff
+
+\NewDocumentCommand\ProcessParameterArg{m}{\item #1}
+
+\newcommand{\ProcessArg}[1]{%
+  \{\wrapXML{\textit{#1}}\}
+}
+
+
+% -------------------------------------------------
+% Commenting on the wrapXML command
+% -------------------------------------------------
+% \wrapXML{<content>}
+%
+% This command wraps the provided content within less than and greater than symbols, "<" and ">", to format it as an XML/HTML tag.
+%
+% Arguments:
+% #1: The content that will be wrapped as an XML/HTML tag.
+%
+% Usage:
+% \wrapXML{Content here}
+%
+% Example:
+% \wrapXML{example}
+% This produces: <example>
+%
+% Version 1.0, last updated 01-08-2023
+\NewDocumentCommand\wrapXML{m}{<#1>}
+
+% -------------------------------------------------
+% Commenting on the \ilc command
+% -------------------------------------------------
+% \ilc{<content>}
+%
+% This command formats the provided content in a typewriter-style font and adds a grayish background, making it suitable for inline code representation in the document.
+%
+% Arguments:
+% #1: The content that will be represented as inline code.
+%
+% Usage:
+% \ilc{Your code here}
+%
+% Example:
+% \ilc{int main()}
+% This produces a typewriter representation of 'int main()' with a gray background.
+%
+% Version 1.1, last updated 03-09-2023
+
+%\NewDocumentCommand\ilc{m}{\colorbox{gray!20}{\texttt{#1}}}
+
+\NewDocumentCommand\ilc{m}{%
+\tcbox[on line, arc=3pt, outer arc=3pt, colback=gray!20, boxsep=0pt, left=3pt, right=3pt, top=3pt, bottom=3pt, boxrule=0pt]{\texttt{#1}}%
+}
+
+\NewDocumentCommand\qqquad{}{\qquad\quad}
+
+
+\NewDocumentCommand\qqqquad{}{\qquad\qquad}

@@ -1,0 +1,291 @@
+% Copyright (c) 2013 Oleksandr Shturmov
+%
+% The MIT License
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%
+% The above copyright notice and this permission notice shall be included in
+% all copies or substantial portions of the Software.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+\ProvidesPackage{survival-pack}
+
+\PassOptionsToPackage{table}{xcolor}
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+
+\PassOptionsToPackage{utf8}{inputenc}
+\PassOptionsToPackage{english}{babel}
+
+% if-then-else
+
+\RequirePackage{ifthen}
+
+%colors
+
+\RequirePackage{color}
+\RequirePackage{xcolor}
+\definecolor{shade}{RGB}{245,245,245}
+
+% langauge
+
+\RequirePackage{inputenc}
+\RequirePackage{babel}
+
+% math
+
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage[makeroom]{cancel}
+\RequirePackage{amsthm}
+\numberwithin{equation}{section} % Numbers equations by section (e.g., 21.1 for the first equation in section 21)
+
+% figures
+
+\NewDocumentCommand\includeFigure{O{1}mmO{htbp!}}
+{
+  \begin{figure}[#4]
+  \centering%
+  \IfDecimal{#1}%
+  {%
+    \includegraphics[scale=#1]{figures/#2}%
+  }%
+  {%
+    \includegraphics[#1]{figures/#2}%
+  }%
+  \caption[]{#3}%
+  \label{figure:#2}%
+  \end{figure}
+}
+
+% references
+
+\NewDocumentCommand\referToSection{m}%
+{%
+  \textsection\ \ref{section:#1}/\pageref{section:#1}%
+}%
+
+\NewDocumentCommand\referToFigure{m}%
+{%
+  (see Figure \ref{figure:#1}, p. \pageref{figure:#1})%
+}%
+
+\NewDocumentCommand\referToTable{m}%
+{%
+  Table \textsection\ref{table:#1}/\pageref{table:#1}%
+}%
+
+\NewDocumentCommand\referToLenma{m}%
+{%
+  (see Lenma \textsection\ref{lenma:#1}, p. \pageref{lenma:#1})}%
+
+\NewDocumentCommand\referToDfn{m}%
+{%
+  (see Definition \textsection\ref{definition:#1}, p. \pageref{definition:#1})}%
+
+\NewDocumentCommand\referToCode{m}%
+{%
+  (see Code \textsection\ref{code:#1}, p. \pageref{code:#1})}%
+
+\NewDocumentCommand\referToSyntax{m}%
+{%
+  (see Syntax \textsection\ref{syntax:#1}, p. \pageref{syntax:#1})}%
+
+\NewDocumentCommand\referToTask{m}%
+{%
+  (see Task \textsection\ref{task:#1}, p. \pageref{task:#1})}%
+
+\NewDocumentCommand\referToEq{m}%
+{%
+  (see Equation \textsection\ref{eq:#1}, p. \pageref{eq:#1})}%
+
+
+
+% references all boxes by grouping
+% example:
+% \referTo{syntax, code, syntax, code, syntax, code}{definition variable, intro code, definition enum, intro code, definition union, intro code}
+\ExplSyntaxOn
+
+% Declare sequences
+\seq_new:N \l_refer_output_seq
+\seq_new:N \l_refer_code_seq
+\seq_new:N \l_refer_syntax_seq
+\seq_new:N \l_refer_task_seq
+\seq_new:N \l_refer_definition_seq
+
+\cs_new:Nn \my_private_func:nn 
+{
+  \str_case:nn {#2}
+    {
+      {syntax}{\seq_put_right:Nn \l_refer_syntax_seq {Syntax~\textsection\ref{syntax:#1},~p.~\pageref{syntax:#1}}}
+      {code}{\seq_put_right:Nn \l_refer_code_seq {Code~\textsection\ref{code:#1},~p.~\pageref{code:#1}}}
+      {task}{\seq_put_right:Nn \l_refer_task_seq {Task~\textsection\ref{task:#1},~p.~\pageref{task:#1}}}
+      {definition}{\seq_put_right:Nn \l_refer_definition_seq {Definition~\textsection\ref{definition:#1},~p.~\pageref{definition:#1}}}
+    }
+}
+
+\cs_new_protected:Nn \append_to_output_seq:n
+{
+  \seq_put_right:Nn \l_refer_output_seq {#1}
+}
+
+\NewDocumentCommand{\referTo}{mm} 
+{
+  % Clear the sequences for every call to \referTo
+  \seq_clear:N \l_refer_output_seq
+  \seq_clear:N \l_refer_code_seq
+  \seq_clear:N \l_refer_syntax_seq
+  \seq_clear:N \l_refer_task_seq
+  \seq_clear:N \l_refer_definition_seq
+
+  \seq_set_from_clist:Nn \l_refer_tmpd_seq {#2} % labels
+  \seq_set_from_clist:Nn \l_refer_tmpe_seq {#1} % types
+  
+  \seq_mapthread_function:NNN \l_refer_tmpd_seq \l_refer_tmpe_seq \my_private_func:nn
+
+  \seq_if_empty:NF \l_refer_code_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_code_seq {,~} {,~} {~and~}} }
+  \seq_if_empty:NF \l_refer_syntax_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_syntax_seq {,~} {,~} {~and~}} }
+  \seq_if_empty:NF \l_refer_task_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_task_seq {,~} {,~} {~and~}} }
+  \seq_if_empty:NF \l_refer_definition_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_definition_seq {,~} {,~} {~and~}} }
+  
+  (see~\seq_use:Nnnn \l_refer_output_seq {,~} {,~} {,~and~})
+}
+
+\ExplSyntaxOff
+
+% Math: Sometimes helpful macros
+\newcommand{\function}[3]{#1\colon#2\to#3}
+\newcommand{\vfunc}[5]{\function{#1}{#2}{#3},\quad#4\longmapsto#5}
+\newcommand{\pdif}[3]{\frac{\pa^{#3}#1}{\pa#2^{#3}}}
+
+
+
+% sections
+
+\NewDocumentCommand\startSectionAux{O{\empty}O{section}mm}
+{%
+  \lowercase{
+    \ifthenelse{\equal{#1}{\empty}}
+    {\def\templabel{#3}}
+    {\def\templabel{#1}}
+  }
+
+  \StrSubstitute{\templabel}{ }{-}[\templabel]
+  \StrSubstitute{\templabel}{,}{}[\templabel]
+  \StrSubstitute{\templabel}{'}{}[\templabel]
+
+  \csname#4\endcsname{#3}\label{#2:\templabel}
+}
+
+\NewDocumentCommand\startSection{O{1}mO{\empty}}
+{
+  \ifthenelse{\equal{#1}{2}}
+  {\startSectionAux[#3]{#2}{subsection}}
+  {\ifthenelse{\equal{#1}{3}}
+  {\startSectionAux[#3]{#2}{subsubsection}}
+  {\startSectionAux[#3]{#2}{section}}
+  }
+}
+
+% tables
+
+\NewDocumentCommand\makeTable{O{htbp!}mmmmm}
+{
+  \begin{table}[#1]
+  \centering
+  \rowcolors{2}{shade}{white}
+  \begin{tabular}{#4}
+  \hline
+  #5\\
+  \hline
+  #6\\
+  \end{tabular}
+  \caption[]{#3}
+  \label{table:#2}
+  \end{table}
+}
+
+
+% bnf shorthands
+
+\NewDocumentCommand\nonterm{m}{\text{\texttt{<#1>}}}
+\NewDocumentCommand\term{m}{\text{\texttt{`#1'}}}
+
+% math shorthands
+
+\NewDocumentCommand\ceil{m}{\ensuremath{\left\lceil{#1}\right\rceil}}
+\NewDocumentCommand\floor{m}{\ensuremath{\left\lfloor{#1}\right\rfloor}}
+\NewDocumentCommand\set{m}{\ensuremath{\left\{{#1}\right\}}}
+\NewDocumentCommand\st{m}{\ensuremath{\left|\ {#1}\right.}}
+\NewDocumentCommand\seq{m}{\ensuremath{\left[{#1}\right]}}
+\NewDocumentCommand\card{m}{\ensuremath{\left|{#1}\right|}}
+\NewDocumentCommand\p{m}{\ensuremath{\left({#1}\right)}}
+\NewDocumentCommand\chev{m}{\ensuremath{\left\langle{#1}\right\rangle}}
+\NewDocumentCommand\iverson{m}{\seq{#1}}
+
+% Math: Common shortcuts
+\def\mbb#1{\mathbb{#1}}
+\def\mfk#1{\mathfrak{#1}}
+
+\def\E{\mbb{E}}
+\def\N{\mbb{N}}
+\def\C{\mbb{C}}
+\def\R{\mbb{R}}
+\def\pr{\mbb{P}}
+\def\Q{\mbb{Q}}
+\def\Z{\mbb{Z}}
+
+\def\la{\leftarrow}
+\def\La{\Leftarrow}
+\def\ra{\rightarrow}
+\def\Ra{\Rightarrow}
+\def\lp{\left(}
+\def\rp{\right)}
+\def\lk{\left[}
+\def\rk{\right]}
+\def\ll{\left|}
+\def\rl{\right|}
+\def\l.{\left.}
+\def\r.{\right.}
+\def\lb{\left\{}
+\def\rb{\right\}}
+
+\def\del{\nabla}
+\def\eps{\varepsilon}
+\def\inv{{-1}}
+\def\pa{\partial}
+\def\vp{\varphi}
+\def\y{\infty}
+\def\th{\theta}
+
+\NewDocumentCommand\mono{m}{\texttt{#1}} % deprecated
+\NewDocumentCommand\email{m}{\texttt{\href{mailto:#1}{#1}}}
+
+% tables shortcuts
+\newcommand{\easytable}[3]{
+    \begin{table}[h]
+        \centering
+        \addtolength{\leftskip} {-2cm}
+        \addtolength{\rightskip}{-2cm}
+        \caption{#1}
+        \begin{tabular}{lccccccc}
+            \toprule
+            #2 \\ % This is the header
+            \midrule
+            #3  % This is the content
+            \bottomrule
+        \end{tabular}
+    \end{table}
+}
+
