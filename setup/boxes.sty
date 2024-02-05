@@ -2,6 +2,163 @@
 \RequirePackage[most]{tcolorbox}
 \NeedsTeXFormat{LaTeX2e}
 
+\usepackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SELF MADE COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{mylenmabg}{HTML}{FFFAF8}
+\definecolor{mylenmafr}{HTML}{983b0f}
+\definecolor{mypropbg}{HTML}{f2fbfc}
+\definecolor{mypropfr}{HTML}{191971}
+\definecolor{myexamplebg}{HTML}{F2FBF8}
+\definecolor{myexamplefr}{HTML}{88D6D1}
+\definecolor{myexampleti}{HTML}{2A7F7F}
+\definecolor{mydefinitbg}{HTML}{E5E5FF}
+\definecolor{mydefinitfr}{HTML}{3F3FA3}
+\definecolor{notesgreen}{RGB}{0,162,0}
+\definecolor{myp}{RGB}{197, 92, 212}
+\definecolor{mygr}{HTML}{2C3338}
+\definecolor{myred}{RGB}{127,0,0}
+\definecolor{myyellow}{RGB}{169,121,69}
+\definecolor{myexercisebg}{HTML}{F2FBF8}
+\definecolor{myexercisefg}{HTML}{88D6D1}
+
+
+%================================
+% Solution BOX
+%================================
+
+\makeatletter
+\newtcbtheorem{question}{Question}{enhanced,
+  breakable,
+  colback=white,
+  colframe=myb!80!black,
+  attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+  fonttitle=\bfseries,
+  title={#2},
+  boxed title size=title,
+  boxed title style={%
+      sharp corners,
+      rounded corners=northwest,
+      colback=tcbcolframe,
+      boxrule=0pt,
+    },
+  underlay boxed title={%
+      \path[fill=tcbcolframe] (title.south west)--(title.south east)
+      to[out=0, in=180] ([xshift=5mm]title.east)--
+      (title.center-|frame.east)
+      [rounded corners=\kvtcb@arc] |-
+      (frame.north) -| cycle;
+    },
+  #1
+}{def}
+\makeatother
+
+%================================
+% DEFINITION BOX
+%================================
+
+\newtcbtheorem[number within=section]{Definition}{Definition}{enhanced,
+  before skip=2mm,after skip=2mm, colback=red!5,colframe=red!80!black,boxrule=0.5mm,
+  attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight}, varwidth boxed title*=-3cm,
+  boxed title style={frame code={
+          \path[fill=tcbcolback]
+          ([yshift=-1mm,xshift=-1mm]frame.north west)
+          arc[start angle=0,end angle=180,radius=1mm]
+          ([yshift=-1mm,xshift=1mm]frame.north east)
+          arc[start angle=180,end angle=0,radius=1mm];
+          \path[left color=tcbcolback!60!black,right color=tcbcolback!60!black,
+            middle color=tcbcolback!80!black]
+          ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+          [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+          -- (frame.south east) -- (frame.south west)
+          -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+          [sharp corners]-- cycle;
+        },interior engine=empty,
+    },
+  fonttitle=\bfseries,
+  title={#2},#1}{def}
+\newtcbtheorem[number within=chapter]{definition}{Definition}{enhanced,
+  before skip=2mm,after skip=2mm, colback=red!5,colframe=red!80!black,boxrule=0.5mm,
+  attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight}, varwidth boxed title*=-3cm,
+  boxed title style={frame code={
+          \path[fill=tcbcolback]
+          ([yshift=-1mm,xshift=-1mm]frame.north west)
+          arc[start angle=0,end angle=180,radius=1mm]
+          ([yshift=-1mm,xshift=1mm]frame.north east)
+          arc[start angle=180,end angle=0,radius=1mm];
+          \path[left color=tcbcolback!60!black,right color=tcbcolback!60!black,
+            middle color=tcbcolback!80!black]
+          ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+          [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+          -- (frame.south east) -- (frame.south west)
+          -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+          [sharp corners]-- cycle;
+        },interior engine=empty,
+    },
+  fonttitle=\bfseries,
+  title={#2},#1}{def}
+
+
+
+
+%================================
+% SOLUTION BOX
+%================================
+
+\makeatletter
+\newtcolorbox{solution}{enhanced,
+  breakable,
+  colback=white,
+  colframe=myg!80!black,
+  attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+  title=Solution,
+  boxed title size=title,
+  boxed title style={%
+      sharp corners,
+      rounded corners=northwest,
+      colback=tcbcolframe,
+      boxrule=0pt,
+    },
+  underlay boxed title={%
+      \path[fill=tcbcolframe] (title.south west)--(title.south east)
+      to[out=0, in=180] ([xshift=5mm]title.east)--
+      (title.center-|frame.east)
+      [rounded corners=\kvtcb@arc] |-
+      (frame.north) -| cycle;
+    },
+}
+\makeatother
+
+
+\newcommand{\sol}{\setlength{\parindent}{0cm}\textbf{\textit{Solution:}}\setlength{\parindent}{1cm} }
+\newcommand{\qs}[2]{\begin{question}{#1}{}#2\end{question}}
+\newcommand{\dfn}[2]{\begin{Definition}[colbacktitle=red!75!black]{#1}{}#2\end{Definition}}
+\newcommand{\dfnc}[2]{\begin{definition}[colbacktitle=red!75!black]{#1}{}#2\end{definition}}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\newcommand\getcurrentref[1]{%
+  \ifnumequal{\value{#1}}{0}
+  {??}
+  {\the\value{#1}}%
+}
+
+\newcommand{\getCurrentSectionNumber}{\getcurrentref{section}}
+\newenvironment{myproof}[1][\proofname]{%
+  \proof[\bfseries #1: ]%
+}{\endproof}
+
+\newcommand{\pf}[2]{\begin{myproof}[#1]#2\end{myproof}}
 
 %================================
 % INTRODUCTION

@@ -29,7 +29,6 @@
 \PassOptionsToPackage{english}{babel}
 
 % if-then-else
-
 \RequirePackage{ifthen}
 
 %colors
@@ -55,7 +54,7 @@
 
 \NewDocumentCommand\includeFigure{O{1}mmO{htbp!}}
 {
-  \begin{figure}[#4]
+\begin{figure}[#4]
   \centering%
   \IfDecimal{#1}%
   {%
@@ -66,7 +65,7 @@
   }%
   \caption[]{#3}%
   \label{figure:#2}%
-  \end{figure}
+\end{figure}
 }
 
 % references
@@ -124,15 +123,15 @@
 \seq_new:N \l_refer_task_seq
 \seq_new:N \l_refer_definition_seq
 
-\cs_new:Nn \my_private_func:nn 
+\cs_new:Nn \my_private_func:nn
 {
   \str_case:nn {#2}
-    {
-      {syntax}{\seq_put_right:Nn \l_refer_syntax_seq {Syntax~\textsection\ref{syntax:#1},~p.~\pageref{syntax:#1}}}
+  {
+    {syntax}{\seq_put_right:Nn \l_refer_syntax_seq {Syntax~\textsection\ref{syntax:#1},~p.~\pageref{syntax:#1}}}
       {code}{\seq_put_right:Nn \l_refer_code_seq {Code~\textsection\ref{code:#1},~p.~\pageref{code:#1}}}
       {task}{\seq_put_right:Nn \l_refer_task_seq {Task~\textsection\ref{task:#1},~p.~\pageref{task:#1}}}
       {definition}{\seq_put_right:Nn \l_refer_definition_seq {Definition~\textsection\ref{definition:#1},~p.~\pageref{definition:#1}}}
-    }
+  }
 }
 
 \cs_new_protected:Nn \append_to_output_seq:n
@@ -140,7 +139,7 @@
   \seq_put_right:Nn \l_refer_output_seq {#1}
 }
 
-\NewDocumentCommand{\referTo}{mm} 
+\NewDocumentCommand{\referTo}{mm}
 {
   % Clear the sequences for every call to \referTo
   \seq_clear:N \l_refer_output_seq
@@ -151,14 +150,14 @@
 
   \seq_set_from_clist:Nn \l_refer_tmpd_seq {#2} % labels
   \seq_set_from_clist:Nn \l_refer_tmpe_seq {#1} % types
-  
+
   \seq_mapthread_function:NNN \l_refer_tmpd_seq \l_refer_tmpe_seq \my_private_func:nn
 
   \seq_if_empty:NF \l_refer_code_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_code_seq {,~} {,~} {~and~}} }
   \seq_if_empty:NF \l_refer_syntax_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_syntax_seq {,~} {,~} {~and~}} }
   \seq_if_empty:NF \l_refer_task_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_task_seq {,~} {,~} {~and~}} }
   \seq_if_empty:NF \l_refer_definition_seq { \append_to_output_seq:n {\seq_use:Nnnn \l_refer_definition_seq {,~} {,~} {~and~}} }
-  
+
   (see~\seq_use:Nnnn \l_refer_output_seq {,~} {,~} {,~and~})
 }
 
@@ -175,27 +174,27 @@
 
 \NewDocumentCommand\startSectionAux{O{\empty}O{section}mm}
 {%
-  \lowercase{
-    \ifthenelse{\equal{#1}{\empty}}
-    {\def\templabel{#3}}
-    {\def\templabel{#1}}
-  }
+\lowercase{
+  \ifthenelse{\equal{#1}{\empty}}
+  {\def\templabel{#3}}
+  {\def\templabel{#1}}
+}
 
-  \StrSubstitute{\templabel}{ }{-}[\templabel]
-  \StrSubstitute{\templabel}{,}{}[\templabel]
-  \StrSubstitute{\templabel}{'}{}[\templabel]
+\StrSubstitute{\templabel}{ }{-}[\templabel]
+\StrSubstitute{\templabel}{,}{}[\templabel]
+\StrSubstitute{\templabel}{'}{}[\templabel]
 
-  \csname#4\endcsname{#3}\label{#2:\templabel}
+\csname#4\endcsname{#3}\label{#2:\templabel}
 }
 
 \NewDocumentCommand\startSection{O{1}mO{\empty}}
 {
-  \ifthenelse{\equal{#1}{2}}
-  {\startSectionAux[#3]{#2}{subsection}}
-  {\ifthenelse{\equal{#1}{3}}
+\ifthenelse{\equal{#1}{2}}
+{\startSectionAux[#3]{#2}{subsection}}
+{\ifthenelse{\equal{#1}{3}}
   {\startSectionAux[#3]{#2}{subsubsection}}
   {\startSectionAux[#3]{#2}{section}}
-  }
+}
 }
 
 % tables
@@ -203,16 +202,16 @@
 \NewDocumentCommand\makeTable{O{htbp!}mmmmm}
 {
   \begin{table}[#1]
-  \centering
-  \rowcolors{2}{shade}{white}
-  \begin{tabular}{#4}
-  \hline
-  #5\\
-  \hline
-  #6\\
-  \end{tabular}
-  \caption[]{#3}
-  \label{table:#2}
+    \centering
+    \rowcolors{2}{shade}{white}
+    \begin{tabular}{#4}
+      \hline
+      #5 \\
+      \hline
+      #6 \\
+    \end{tabular}
+    \caption[]{#3}
+    \label{table:#2}
   \end{table}
 }
 
@@ -274,18 +273,18 @@
 
 % tables shortcuts
 \newcommand{\easytable}[3]{
-    \begin{table}[h]
-        \centering
-        \addtolength{\leftskip} {-2cm}
-        \addtolength{\rightskip}{-2cm}
-        \caption{#1}
-        \begin{tabular}{lccccccc}
-            \toprule
-            #2 \\ % This is the header
-            \midrule
-            #3  % This is the content
-            \bottomrule
-        \end{tabular}
-    \end{table}
+  \begin{table}[h]
+    \centering
+    \addtolength{\leftskip} {-2cm}
+    \addtolength{\rightskip}{-2cm}
+    \caption{#1}
+    \begin{tabular}{lccccccc}
+      \toprule
+      #2 \\ % This is the header
+      \midrule
+      #3  % This is the content
+      \bottomrule
+    \end{tabular}
+  \end{table}
 }
 

@@ -1,0 +1,190 @@
+
+!So, writing should be done without ur wrists touching the table or the wrist pad. This is to avoid RSI.\\
+
+\section{5/2: Introduction, Proofs, Loop Invariants, CLRS 2.1 (RP)}
+
+\begin{tcolorbox}[title=Chapter Quick Summary Notes (CRLS 2.1)]
+  This box can contain summaries, key points, and important definitions from the reading material assigned (CLRS 2.1). Highlight the main concepts, proofs, and examples discussed in the text.
+\end{tcolorbox}
+
+\subsection{Loop Invariants:}
+Loop invariants are used to prove the correctness of algorithms. They are used to show that the algorithm is working as expected. The loop invariant is a property that holds before and after each iteration of the loop. When you're using a loop invariant, you need to show three things:
+
+\begin{enumerate}
+  \item \textbf{Initialization:} It is true prior to the first iteration of the loop.
+  \item \textbf{Maintenance:} If it is true before an iteration of the loop, it remains true before the next iteration.
+  \item \textbf{Termination:} The loop terminates, and when it terminates, the invariant - usually along with the reason that the loop terminated - gives us a useful property that helps show that the algorithm is correct.
+\end{enumerate}
+When the first two properties are true, the loop invariant is true prior to every iterarion of the loop. When the third property is true, the loop invariant is true after the last iteration of the loop, giving us a useful property that helps show that the algorithm is correct.
+\\ \\
+A loop-invariant proof is a form of mathematical induction, where to prove that a property holds, you prove a base case and an inductive step. Here, showing the invariant holds before the first iteration of the loop is like the base case, and showing that the invariant holds from one iteration to the next (from iteration to iteration) is like the inductive step. The third property is perhaps the most important one, because it is where the loop invariant is used to show that the algorithm is correct.
+
+
+
+\subsection{Proofs:}
+Test.
+
+\subsection{Insertion-Sort and cost analysis}
+
+\begin{algorithm}[H]
+  \caption{Insertion-Sort(A)}
+  \AlgoTopMargin
+  \AlgoInput{$A[1..n]$, an array of numbers.} \\
+  \AlgoOutput{$A[1..n]$, sorted in non-decreasing order.}
+  \begin{multicols}{2}
+    \begin{algorithmic}[1]
+      \For{\texttt{j = 2 to A.length}}
+      \State \texttt{key = A[j]}
+      \State \texttt{i = j - 1}
+      \While{\texttt{i > 0 and A[i] > key}}
+      \State \texttt{A[i + 1] = A[i]}
+      \State \texttt{i = i - 1}
+      \EndWhile
+      \State \texttt{A[i + 1] = key}
+      \EndFor
+    \end{algorithmic}
+
+    \columnbreak
+    \vspace*{-8.8em}
+    \begin{align*}
+       & \text{cost} &  & \text{times}                       \\[3.8em]
+       & c_1         &  & n                                  \\[-0.4em]
+       & c_2         &  & n - 1                              \\[-0.2em]
+       & 0           &  & n - 1                              \\[-0.3em]
+       & c_4         &  & n - 1                              \\[0.68em]
+       & c_5         &  & \textstyle \sum_{j=2}^{n}t_j       \\[-0.3em]
+       & c_6         &  & \textstyle \sum_{j=2}^{n}(t_j - 1) \\[-0.4em]
+       & c_7         &  & \textstyle \sum_{j=2}^{n}(t_j - 1) \\
+    \end{align*}
+  \end{multicols}
+\end{algorithm}
+where $t_j$ is the number of times the while loop test in line 4 is executed for that value of $j$. $T(n)$ also called the recurrence relation, is given by:
+\begin{align*}
+  T(n) & = c_1n + c_2(n - 1) + c_4(n - 1) + c_5\sum_{j=2}^{n}t_j + c_6\sum_{j=2}^{n}(t_j - 1) + c_7\sum_{j=2}^{n}(t_j - 1) \\
+       & = (c_1 + c_2 + c_4)n - (c_2 + c_4 + c_5 + c_6 + c_7) + (c_5 + c_6 + c_7)\sum_{j=2}^{n}(t_j - 1)
+\end{align*}
+For the worst case we have $t_j = j$ for $j = 2, 3, \ldots, n$ because each $j$ iteration it has to move the key to the first position and we know that $\textstyle \sum_{i=1}^n = \frac{n(n - 1)}{2}$ and so hence we would have $T(n)$ as follows:
+\begin{align*}
+  T(n) & = (c_1 + c_2 + c_4)n - (c_2 + c_4 + c_5 + c_6 + c_7) + (c_5 + c_6 + c_7)\sum_{j=2}^{n}(j - 1)                     \\
+       & = (c_1 + c_2 + c_4)n - (c_2 + c_4 + c_5 + c_6 + c_7) + (c_5 + c_6 + c_7)\left(\frac{n(n - 1)}{2} - (n - 1)\right) \\
+       & = an^2 + bn + c
+\end{align*}
+And thereby we have shown that the worst-case running time of insertion-sort is $\Theta(n^2)$.
+
+
+\subsection{Exercises:}
+
+\qs{}{
+  Prove that \( x^2 - y^2 = 1 \) has no solutions for positive integers \( x,y \) (the positive integers are the numbers \( 1,2,\ldots \)).
+}
+
+\pf{Proof for Question 1}{
+  We can consider the equation in the form of difference of two squares:
+  \[
+    x^2 - y^2 = (x - y)(x + y) = 1
+  \]
+  We can now recall that for positive integers a and b, if $ab = 1$, then both $a$ and $b$ must be $1$. Since $1$ is the only positive integer multiplied by itself that gives $1$. Hence, when we consider the equation $(x - y)(x + y) = 1$, we can see that the only way to get $1$ is if $x - y = 1$ and $x + y = 1$. This gives us the system of equations:
+  \[
+    \begin{cases}
+      x - y = 1 \\
+      x + y = 1
+    \end{cases}
+  \]
+  Adding the two equations gives us $2x + 0y = 2x = 2$, and so $x = 1$. Substituting $x = 1$ into the second equation gives us $1 + y = 1$, and so $y = 0$. But $0$ is not a positive integer, and so the equation \( x^2 - y^2 = 1 \) has no solutions for positive integers \( x,y \).
+}
+
+\qs{Question 2}{
+  Prove that \( x^2 - y^2 = 10 \) has no solutions for positive integers \( x,y \)
+}
+
+\pf{Proof for Question 2}{
+  Again, we can consider the equation in the form of difference of two squares:
+  \[
+    x^2 - y^2 = (x - y)(x + y) = 10
+  \]
+  This time we will in fact assume that $\exists x, y \in \mathbb{Z}^+$ such that $x^2 - y^2 = 10$. If we consider the equation $(x - y)(x + y) = 10$,
+}
+
+\qs{}{
+  Prove that if \( a \) is a rational number and \( b \) is an irrational number, then \( a + b \) is an irrational number. (A rational number is one that can be written in the form \( \frac{m}{n} \), where \( m \) and \( n \) are integers and \( n \neq 0 \)).
+}
+
+\qs{}{
+  Give a formula for the sum of the first \( n \) odd numbers.
+  \[
+    f(n) = \sum_{i=1}^{n} (2i - 1)
+  \]
+}
+
+\qs{}{
+  Show that \( n! > 2^n \) for \( n \geq 4 \).
+}
+
+\qs{}{
+  The Fibonacci numbers are defined as \( f_0 = 0, f_1 = 1 \), and \( f_{n} = f_{n-1} + f_{n-2} \), for \( n \geq 2 \). The first Fibonacci numbers are thus \( 0, 1, 1, 2, 3, 5, 8, 13, 21, \ldots \)
+  Prove that
+  \[
+    \sum_{i=1}^{n} f_i^2 = f_n \cdot f_{n+1}
+  \]
+}
+
+\qs{}{
+  Show that
+  \[
+    \sum_{i=1}^{n} f_{2i} = f_{2n} - 1
+  \]
+}
+
+\qs{}{
+  Show that
+  \[
+    \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1}
+  \]
+}
+
+
+
+
+
+
+%\sol{Solution for Question 1}{%
+%  First we show that $||x+y||_p \leq ||x||_p + ||y||_p$ for $p\geq 1$.
+%  \begin{align}
+%    ||x+y||_p^p & = \sum_{i=1}^n |x_i + y_i|^p                  \\
+%                & \leq \sum_{i=1}^n (|x_i| + |y_i|)^p           \\
+%                & \leq \sum_{i=1}^n (|x_i|^p + |y_i|^p)         \\
+%                & = \sum_{i=1}^n |x_i|^p + \sum_{i=1}^n |y_i|^p \\
+%                & = ||x||_p^p + ||y||_p^p                       \\
+%                & = (||x||_p + ||y||_p)^p
+%  \end{align}
+%}
+
+%\pf{Proof for Question 1}{%
+%  First we show that $||x+y||_p \leq ||x||_p + ||y||_p$ for $p\geq 1$.
+%  \begin{align*}
+%    ||x+y||_p^p & = \sum_{i=1}^n |x_i + y_i|^p                  \\
+%                & \leq \sum_{i=1}^n (|x_i| + |y_i|)^p           \\
+%                & \leq \sum_{i=1}^n (|x_i|^p + |y_i|^p)         \\
+%                & = \sum_{i=1}^n |x_i|^p + \sum_{i=1}^n |y_i|^p \\
+%                & = ||x||_p^p + ||y||_p^p                       \\
+%                & = (||x||_p + ||y||_p)^p
+%  \end{align*}
+%}
+
+\section{7/2: Time Complexity and Asymptotic Notation, CLRS 2.2, 3 (RP)}
+\section{12/2: Divide and Conquer, Recursion Equations, and Lower Bound for Sorting, CLRS 2.3, 4 up to 4.5, pages 157-160, 8.1 (RP)}
+\section{14/2: Amortized Analysis, CLRS 16 (RP)}
+\section{19/2: LSM Trees, Fibonacci Heaps, CLRS digital chapter 19
+  Download digital chapter 19 (19.4 is cursory) (RP)}
+\section{21/2: Dynamic Programming, CLRS 14 except for 14.2 and 14.5 (MA)}
+\section{26/2: Greedy Algorithms, CLRS 15 (MA)}
+\section{28/2: No teaching due to open house}
+\section{4/3: Binary Search Trees, CLRS 12 and 13 (PW)}
+\section{6/3: Disjoint Sets, Plane Sweep, CLRS 19.1-3, CLRS digital chapter 33.1-2
+  Download CLRS digital chapter 33.1-2 (PW)}
+\section{11/3: Minimum Spanning Tree, CLRS 21 (PW)}
+\section{13/3: Shortest Paths, CLRS 22 (PW)}
+\section{18/3: Computational Geometry, CLRS digital chapter 33
+  Download CLRS digital chapter 33 (PW)}
+\section{4/3: Question Time (same time and place as lectures) (MA, PW, RP)}
+\section{8/4 OR 10/4?: Written Exam}

@@ -41,14 +41,12 @@
 % no indentation after \ line breaks
 \setlength{\parindent}{0pt}
 
-
 % citations
 
 % Remove because incompatible with biblatex - Luca
 %\RequirePackage{cite}
 
 % enumitem, itemize, description
-
 \RequirePackage{expdlist}
 \RequirePackage{multirow}
 \RequirePackage{enumitem}
@@ -80,8 +78,6 @@
 \everymath{\displaystyle}
 
 % code
-
-\RequirePackage{clrscode3e}
 \RequirePackage{verbatim}
 \RequirePackage{listings}
 \lstset
@@ -118,18 +114,18 @@
 
 \newcommand{\subject}{[subject not setup]}
 \newcommand{\setSubject}[1]{%
-	\renewcommand{\subject}{#1}%
+  \renewcommand{\subject}{#1}%
 }
 
 \newcommand{\assignment}{\empty}
 \newcommand{\setAssignment}[1]{%
-	\renewcommand{\assignment}{#1}\title{#1}\hypersetup{pdftitle={#1}}%
+  \renewcommand{\assignment}{#1}\title{#1}\hypersetup{pdftitle={#1}}%
 }
 \setAssignment{[assignment not setup]}
 
 \newcommand{\staticDate}{\empty}
 \newcommand{\setStaticDate}[1]{%
-	\renewcommand{\staticDate}{#1}\date{#1}%
+  \renewcommand{\staticDate}{#1}\date{#1}%
 }
 \setStaticDate{[date not setup]}
 
@@ -153,29 +149,29 @@
 
 \define@key{setupLocation}{short}{\setShortLocation{#1}}
 \NewDocumentCommand\setupLocation{O{}m}{%
-    \setLongLocation{#2}%
-    \setkeys{setupLocation}{#1}%
+  \setLongLocation{#2}%
+  \setkeys{setupLocation}{#1}%
 }
 
 % author
 
 \newcommand{\shortAuthor}{\empty}
 \newcommand{\setShortAuthor}[1]{%
-	\renewcommand{\shortAuthor}{#1}%
+  \renewcommand{\shortAuthor}{#1}%
 }
 
 \newcommand{\longAuthor}{\empty}
 \newcommand{\setLongAuthor}[1]{%
-	\renewcommand{\longAuthor}{#1}%
-	\author{#1}%
-	\hypersetup{pdfauthor={#1}}%
-	\setShortAuthor{#1}%
+  \renewcommand{\longAuthor}{#1}%
+  \author{#1}%
+  \hypersetup{pdfauthor={#1}}%
+  \setShortAuthor{#1}%
 }
 \setLongAuthor{[author not setup]}
 
 \newcommand{\authorAddendum}{\empty}
 \newcommand{\setAuthorAddendum}[1]{%
-	\renewcommand{\authorAddendum}{#1}%
+  \renewcommand{\authorAddendum}{#1}%
 }
 
 \define@key{setupAuthor}{short}{\setShortAuthor{#1}}
@@ -188,25 +184,25 @@
 % fancy
 
 \ifthenelse{\equal{\dofancy}{true}}{%
-%
-\RequirePackage{fancyhdr}%
-\RequirePackage{lastpage}%
-%
-\pagestyle{fancy}%
-\lhead{\footnotesize\shortAuthor\\\authorAddendum}%
-\chead{\footnotesize\subject\\\assignment}%
-\rhead{\footnotesize\shortLocation\\\staticDate}%
-\cfoot{\thepage/\pageref*{LastPage}}%
-\renewcommand{\headrulewidth}{0in}%
-\renewcommand{\headsep}{40pt}%
-\setlength{\headheight}{20pt}%
-\addtolength{\textheight}{-20pt}%
-%
-\fancypagestyle{first}%
-{%
-  \fancyhf{}%
+  %
+  \RequirePackage{fancyhdr}%
+  \RequirePackage{lastpage}%
+  %
+  \pagestyle{fancy}%
+  \lhead{\footnotesize\shortAuthor\\\authorAddendum}%
+  \chead{\footnotesize\subject\\\assignment}%
+  \rhead{\footnotesize\shortLocation\\\staticDate}%
   \cfoot{\thepage/\pageref*{LastPage}}%
-}%
+  \renewcommand{\headrulewidth}{0in}%
+  \renewcommand{\headsep}{40pt}%
+  \setlength{\headheight}{20pt}%
+  \addtolength{\textheight}{-20pt}%
+  %
+  \fancypagestyle{first}%
+  {%
+    \fancyhf{}%
+    \cfoot{\thepage/\pageref*{LastPage}}%
+  }%
 }{}
 
 % captions
@@ -218,12 +214,12 @@
 \RenewDocumentCommand\maketitle{}%
 {%
   \begin{center}%
-  \LARGE\assignment\\\ \\%
-  \large\longLocation\ (\shortLocation)\\%
-  \large\subject\\\ \\%
-  \large\longAuthor\\%
-  \normalsize\authorAddendum\\\ \\%
-  \normalsize\staticDate%
+    \LARGE\assignment\\\ \\%
+    \large\longLocation\ (\shortLocation)\\%
+    \large\subject\\\ \\%
+    \large\longAuthor\\%
+    \normalsize\authorAddendum\\\ \\%
+    \normalsize\staticDate%
   \end{center}%
   \ifthenelse{\equal{\dofancy}{true}}{\thispagestyle{first}}{}%
 }%
