@@ -102,11 +102,38 @@ And thereby we have shown that the worst-case running time of insertion-sort is 
   \[
     x^2 - y^2 = (x - y)(x + y) = 10
   \]
-  This time we will in fact assume that $\exists x, y \in \mathbb{Z}^+$ such that $x^2 - y^2 = 10$. If we consider the equation $(x - y)(x + y) = 10$,
+  This time we will in fact assume that $\exists x, y \in \mathbb{Z}^+$ such that $x^2 - y^2 = 10$. If we consider the equation $(x - y)(x + y) = 10$, there are four ways to factorize $10$ into two numbers, and they are:
+  \[
+    \begin{cases}
+      x - y = 1, x + y = 10 \\
+      x - y = 2, x + y = 5  \\
+      x - y = 5, x + y = 2  \\
+      x - y = 10, x + y = 1
+    \end{cases}
+  \]
+  But because of symmetry, we can see that the first and last equations are the same, and the second and third equations are the same. If we solve the first equations by adding the two equations:
+  \[
+    x - y + x + y = 1 + 10 \Rightarrow 2x = 11 \Rightarrow x = \frac{11}{2}
+  \]
+  But $x$ is a positive integer, and so the first equation has no solutions. We can then also solve for the second equations by adding the two equations:
+  \[
+    x - y + x + y = 2 + 5 \Rightarrow 2x = 7 \Rightarrow x = \frac{7}{2}
+  \]
+  But $x$ is a rational number, and so the second equation has no solutions.
+
+
 }
 
 \qs{}{
-  Prove that if \( a \) is a rational number and \( b \) is an irrational number, then \( a + b \) is an irrational number. (A rational number is one that can be written in the form \( \frac{m}{n} \), where \( m \) and \( n \) are integers and \( n \neq 0 \)).
+  Prove that if \( a \) is a rational number and \( b \) is an irrational number, then \( a + b \) is an irrational number. (A rational number is one that can be written in the form \( \frac{x}{y} \), for some \( x, y \in \mathbb{Z} \) and \( y \neq 0 \)).
+}
+
+\pf{Proof for Question 3}{
+  We can prove this by contradiction. Assume that \( a + b \) is a rational number. Then \( a + b = \frac{x}{y} \) for some \( x, y \in \mathbb{Z} \) and \( y \neq 0 \). We know that $a$ is a rational number, hence $a=\frac{p}{q}$ for some $p, q \in \mathbb{Z}$ and $q \neq 0$, and so $b$ could be written as:
+  \begin{align*}
+    b & = \frac{x}{y} - \frac{p}{q} = \frac{xq - py}{qy}
+  \end{align*}
+  But this is a rational number, which is a contradiction because b was assumed to be irrational. Therefore, the initial assumption that $a+b$ is rational must be false, so $a+b$ is irrational.
 }
 
 \qs{}{
@@ -114,6 +141,17 @@ And thereby we have shown that the worst-case running time of insertion-sort is 
   \[
     f(n) = \sum_{i=1}^{n} (2i - 1)
   \]
+}
+
+\sol{}{
+  Let us try and calculate the first few terms of the sequence:
+  \begin{align*}
+    f(1) & = \sum_{i=1}^1 (2i - 1) = 2 \cdot 1 - 1 = 1                                                   \\
+    f(2) & = \sum_{i=1}^2 (2i - 1) = (2 \cdot 1 - 1) + (2 \cdot 2 - 1) = 1 + 3 = 4                       \\
+    f(3) & = \sum_{i=1}^3 (2i - 1) = (2 \cdot 1 - 1) + (2 \cdot 2 - 1) + (2 \cdot 3 - 1) = 1 + 3 + 5 = 9 \\
+    f(4) & = \sum_{i=1}^4 (2i - 1) = (2 \cdot 1 - 1) + \cdots + (2 \cdot 4 - 1) = 1 + 3 + 5 + 7 = 16
+  \end{align*}
+  
 }
 
 \qs{}{
