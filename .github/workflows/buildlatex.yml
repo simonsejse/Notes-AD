@@ -25,7 +25,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add root.pdf
+          git add -f root.pdf
           git commit -m "Add generated PDF" -a
           git push
 
