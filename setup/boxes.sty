@@ -68,9 +68,50 @@
 }{def}
 \makeatother
 
+% Command to add a section heading to the List of Questions
+\newcommand{\sectiontolist}[1]{
+  \addtocontents{qus}{\protect\contentsline{section}{\protect\numberline{\thesection}#1}{}{}}
+}
+
+% Use this command in your document body before each section
+
+% Save the original \section command
+\let\oldsection\section
+\makeatletter
+\def\qsection{%
+  \@ifstar{\@Starred}{\@nonStarred}%
+}
+\def\@Starred{%
+  \@ifnextchar[%
+  {\GenericWarning{}{Warning: A starred section can not have parameters. I am going to ignore them!}\@StarredWith}%
+  {\@StarredWithout}%
+}
+\def\@StarredWith[#1]#2{%
+  \oldsection*{#2}%
+}
+\def\@StarredWithout#1{
+  \oldsection*{#1}%
+}
+\def\@nonStarred{%
+  \@ifnextchar[%
+  {\@nonStarredWith}%
+  {\@nonStarredWithout}%
+}
+\def\@nonStarredWith[#1]#2{%
+  \oldsection[#1]{#2}%
+  \sectiontolist{#1}%
+}
+\def\@nonStarredWithout#1{%
+  \oldsection{#1}%
+  \sectiontolist{#1}%
+}
+\makeatother
+
+
 % Command to add a question to the List of Questions
-\newcommand{\addtolist}[1]{
-  \addcontentsline{qus}{questions}{Question\protect\numberline{ \thetcbcounter}:\,#1}
+\newcommand{\addtolist}[1]{%
+  \addcontentsline{qus}{questions}{Question \protect\numberline{\thetcbcounter} : \,#1}%
+
 }
 
 % Define the \qs command to automatically add questions to the list
