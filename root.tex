@@ -12,6 +12,15 @@
 \usepackage{booktabs}
 \usepackage{threeparttable}
 \usepackage{tikz}
+
+
+% for unicode symbols
+\usepackage{newunicodechar}
+\newunicodechar{✓}{\checkmark}
+\newunicodechar{✠}{\maltese}
+% end_ for unicode symbols
+
+
 %_ for algorithms
 \usepackage{multicol}
 \usepackage{algorithm}
@@ -42,7 +51,7 @@
 \setup{%
   subject={Algorithms and Data Structures},%
   assignment={My Notes 2024},%
-  date={November 27, 2023.}%
+  date={\today}%
 }
 \setupLocation[short=DIKU]{Department of Computer Science, Copenhagen University}
 \setupAuthor[addendum={\email{zlp616@alumni.ku.dk}}]{Simon Winther}
@@ -63,13 +72,15 @@
 
 \maketitle
 
-%\thispagestyle{empty} % no fancy header on first page (just a fancy footer).
-
 \tableofcontents
 
 \clearpage
 
 \listofalgorithms
+
+\clearpage
+
+\listofquestions
 
 \clearpage
 
@@ -80,6 +91,5 @@
 \input{sections/sections.tex}
 \input{sections/appendix/main.tex}
 
-%\printbibliography
 \end{document}
 

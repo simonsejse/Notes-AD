@@ -37,8 +37,13 @@
 % Solution BOX
 %================================
 
+\usepackage{tocloft}
+\newcommand{\listquestionname}{List of Questions}
+\newlistof{questions}{qus}{\listquestionname}
+
+
 \makeatletter
-\newtcbtheorem{question}{Question}{enhanced,
+\newtcbtheorem[number within=section]{question}{Question}{enhanced,
   breakable,
   colback=white,
   colframe=myb!80!black,
@@ -62,6 +67,14 @@
   #1
 }{def}
 \makeatother
+
+% Command to add a question to the List of Questions
+\newcommand{\addtolist}[1]{
+  \addcontentsline{qus}{questions}{Question\protect\numberline{ \thetcbcounter}:\,#1}
+}
+
+% Define the \qs command to automatically add questions to the list
+\newcommand{\qs}[2]{\begin{question}{#1}{}#2\addtolist{#1}\end{question}}
 
 %================================
 % DEFINITION BOX
@@ -141,7 +154,6 @@
 
 
 \newcommand{\sol}{\setlength{\parindent}{0cm}\textbf{\textit{Solution:}}\setlength{\parindent}{1cm} }
-\newcommand{\qs}[2]{\begin{question}{#1}{}#2\end{question}}
 \newcommand{\dfn}[2]{\begin{Definition}[colbacktitle=red!75!black]{#1}{}#2\end{Definition}}
 \newcommand{\dfnc}[2]{\begin{definition}[colbacktitle=red!75!black]{#1}{}#2\end{definition}}
 
