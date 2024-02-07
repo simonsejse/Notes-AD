@@ -222,7 +222,7 @@ stringstyle=\color{mydarkpurple}
 \definecolor{mylenmabg}{HTML}{FFFAF8}
 
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem[number within=section]{lenma}{Lenma \textsection\hspace*{-0.3em}}
+\newtcbtheorem[number within=section]{lemma}{Lemma \textsection\hspace*{-0.3em}}
 {%
   enhanced,
   breakable,
@@ -240,7 +240,7 @@ stringstyle=\color{mydarkpurple}
   segmentation style={solid, mylenmafr},
 }{lenma}
 
-\NewDocumentCommand\mlenma{mmm}{\begin{lenma}{#1}{#2}#3\end{lenma}}
+\NewDocumentCommand\mlemma{mmm}{\begin{lemma}{#1}{#2}#3\end{lemma}}
 
 %================================
 % Definition
