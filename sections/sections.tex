@@ -189,13 +189,30 @@ This holds, and now we can assume that \( \textstyle \sum_{i=1}^{n} f_i^2 = f_n 
 After proving the base case and assuming the induction hypothesis \( \textstyle \sum_{i=1}^{n} f_i^2 = f_n f_{n+1} \) holds for some \( n \geq 2 \), we have shown that \( \textstyle \sum_{i=1}^{n+1} f_i^2 = f_{n+1}f_{n+2} \) holds as well. Therefore, the proof is complete.
 }
 
-\qs{Proof (\maltese)}{
+\qs{Proof (very good induction proof)}{
   Show that
   \[
-    \sum_{i=1}^{n} f_{2i} = f_{2n} - 1
+    \sum_{i=1}^{n} f_{i} = f_{n+2} - 1
   \]
 }
 
+\pf{Proof for Question 7}{
+  We will prove this by induction. First we will test our base case, which will be:
+  \begin{align*}
+    \sum_{i=1}^{2} f_{i} & = f_{2+2} - 1 \\
+    f_1 + f_2            & = f_4 - 1     \\
+    1 + 1                & = 3 - 1       \\
+    2                    & = 2
+  \end{align*}
+  This holds, and now we can assume that \( \textstyle \sum_{i=1}^{n} f_{i} = f_{n+2} - 1 \) holds for some \( n \geq 2 \). We can then show that \( \textstyle \sum_{i=1}^{n+1} f_{i} \) holds as well:
+  \begin{align*}
+    \sum_{i=1}^{n+1} f_{i} & = \sum_{i=1}^{n} f_{i} + f_{n+1} \\
+    \sum_{i=1}^{n+1} f_{i} & = f_{n+2} - 1 + f_{n+1}          \\
+    \sum_{i=1}^{n+1} f_{i} & = f_{n+2} + f_{n+1} - 1          \\
+    \sum_{i=1}^{n+1} f_{i} & = f_{n+3} - 1
+  \end{align*}
+  After proving the base case and assuming the induction hypothesis \( \textstyle \sum_{i=1}^{n} f_{i} = f_{n+2} - 1 \) holds for some \( n \geq 2 \), we have shown that \( \textstyle \sum_{i=1}^{n+1} f_{i} = f_{n+3} - 1 \) holds as well. Therefore, the proof is complete.
+}
 
 \qs{Proof (\maltese)}{
   Show that
@@ -204,41 +221,24 @@ After proving the base case and assuming the induction hypothesis \( \textstyle 
   \]
 }
 
-\qs{Proof (\maltese)}{
-  Show that
-  \[
-    \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1}
-  \]
+\pf{Proof for Question 8}{
+  We will prove this by induction. First we will test our base case, which will be:
+  \begin{align*}
+    \sum_{i=1}^{1} \frac{1}{i(i+1)} & = \frac{1}{1+1} \\
+    \frac{1}{1(1+1)}                & = \frac{1}{2}   \\
+    \frac{1}{2}                     & = \frac{1}{2}
+  \end{align*}
+  This holds, and now we can assume that \( \textstyle \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1} \) holds for some \( n \geq 1 \). We can then show that \( \textstyle \sum_{i=1}^{n+1} \frac{1}{i(i+1)} \) holds as well:
+  \begin{align*}
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \sum_{i=1}^{n} \frac{1}{i(i+1)} + \frac{1}{(n+1)(n+1+1)} \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n}{n+1} + \frac{1}{(n+1)(n+2)}                     \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n(n+2) + 1}{(n+1)(n+2)}                            \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n^2 + 2n + 1}{(n+1)(n+2)}                          \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{(n+1)^2}{(n+1)(n+2)}                               \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n+1}{n+2}
+  \end{align*}
+  After proving the base case and assuming the induction hypothesis \( \textstyle \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1} \) holds for some \( n \geq 1 \), we have shown that \( \textstyle \sum_{i=1}^{n+1} \frac{1}{i(i+1)} = \frac{n+1}{n+2} \) holds as well. Therefore, the proof is complete.
 }
-
-
-
-
-
-
-%\sol{Solution for Question 1}{%
-%  First we show that $||x+y||_p \leq ||x||_p + ||y||_p$ for $p\geq 1$.
-%  \begin{align}
-%    ||x+y||_p^p & = \sum_{i=1}^n |x_i + y_i|^p                  \\
-%                & \leq \sum_{i=1}^n (|x_i| + |y_i|)^p           \\
-%                & \leq \sum_{i=1}^n (|x_i|^p + |y_i|^p)         \\
-%                & = \sum_{i=1}^n |x_i|^p + \sum_{i=1}^n |y_i|^p \\
-%                & = ||x||_p^p + ||y||_p^p                       \\
-%                & = (||x||_p + ||y||_p)^p
-%  \end{align}
-%}
-
-%\pf{Proof for Question 1}{%
-%  First we show that $||x+y||_p \leq ||x||_p + ||y||_p$ for $p\geq 1$.
-%  \begin{align*}
-%    ||x+y||_p^p & = \sum_{i=1}^n |x_i + y_i|^p                  \\
-%                & \leq \sum_{i=1}^n (|x_i| + |y_i|)^p           \\
-%                & \leq \sum_{i=1}^n (|x_i|^p + |y_i|^p)         \\
-%                & = \sum_{i=1}^n |x_i|^p + \sum_{i=1}^n |y_i|^p \\
-%                & = ||x||_p^p + ||y||_p^p                       \\
-%                & = (||x||_p + ||y||_p)^p
-%  \end{align*}
-%}
 
 \section{7/2: Time Complexity and Asymptotic Notation, CLRS 2.2, 3 (RP)}
 \section{12/2: Divide and Conquer, Recursion Equations, and Lower Bound for Sorting, CLRS 2.3, 4 up to 4.5, pages 157-160, 8.1 (RP)}
