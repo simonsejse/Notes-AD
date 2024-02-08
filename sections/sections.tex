@@ -230,11 +230,13 @@ After proving the base case and assuming the induction hypothesis \( \textstyle 
   \end{align*}
   This holds, and now we can assume that \( \textstyle \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1} \) holds for some \( n \geq 1 \). We can then show that \( \textstyle \sum_{i=1}^{n+1} \frac{1}{i(i+1)} \) holds as well:
   \begin{align*}
-    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \sum_{i=1}^{n} \frac{1}{i(i+1)} + \frac{1}{(n+1)(n+1+1)} \\
-    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n}{n+1} + \frac{1}{(n+1)(n+2)}                     \\
-    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n(n+2) + 1}{(n+1)(n+2)}                            \\
-    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n^2 + 2n + 1}{(n+1)(n+2)}                          \\
-    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{(n+1)^2}{(n+1)(n+2)}                               \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \sum_{i=1}^{n} \frac{1}{i(i+1)} + \frac{1}{(n+1)(n+1+1)}             \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n}{n+1} + \frac{1}{(n+1)(n+2)}                                 \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n(n+1)(n+2)}{(n+1)(n+1)(n+2)} + \frac{1(n+1)}{(n+1)(n+1)(n+2)} \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n(n+1)(n+2) + (n+1)}{(n+1)(n+1)(n+2)}                          \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n(n+2) + 1}{(n+1)(n+2)}                                        \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n^2 + 2n + 1}{(n+1)(n+2)}                                      \\
+    \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{(n+1)^2}{(n+1)(n+2)}                                           \\
     \sum_{i=1}^{n+1} \frac{1}{i(i+1)} & = \frac{n+1}{n+2}
   \end{align*}
   After proving the base case and assuming the induction hypothesis \( \textstyle \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1} \) holds for some \( n \geq 1 \), we have shown that \( \textstyle \sum_{i=1}^{n+1} \frac{1}{i(i+1)} = \frac{n+1}{n+2} \) holds as well. Therefore, the proof is complete.
