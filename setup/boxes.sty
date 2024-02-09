@@ -33,15 +33,41 @@
 \definecolor{myexercisefg}{HTML}{88D6D1}
 
 
-%================================
-% Solution BOX
-%================================
-
+%=================================
+% table of contents stuff new
+%=================================
 \usepackage{tocloft}
+
+% question
 \newcommand{\listquestionname}{List of Questions}
 \newlistof{questions}{qus}{\listquestionname}
 
+\newcommand{\addquestionsection}[1]{
+  \addtocontents{qus}{\protect\contentsline{section}{\protect\numberline{\thesection}#1}{}{}}
+}
 
+% theorem
+\newcommand{\listoftheoremsname}{List of Theorems}
+\newlistof{theorems}{thm}{\listoftheoremsname}
+
+\theoremstyle{plain}
+\newtheorem{customthm}{Theorem}[section]
+\newcommand{\thm}[2]{
+  \refstepcounter{customthm} % Increment the custom theorem counter
+  \addcontentsline{thm}{theorems}{\protect\numberline{\thecustomthm}#1} % Add to list of theorems
+  \begin{customthm}[#1]
+    #2
+  \end{customthm}
+}
+
+\newcommand{\addtheoremsection}[1]{
+  \addtocontents{thm}{\protect\contentsline{section}{\protect\numberline{\thesection}#1}{}{}}
+}
+
+
+%================================
+% Solution BOX
+%================================
 \makeatletter
 \newtcbtheorem[number within=section]{question}{Question}{enhanced,
   breakable,
@@ -68,54 +94,14 @@
 }{def}
 \makeatother
 
-% Command to add a section heading to the List of Questions
-\newcommand{\sectiontolist}[1]{
-  \addtocontents{qus}{\protect\contentsline{section}{\protect\numberline{\thesection}#1}{}{}}
-}
-
-% Use this command in your document body before each section
-
-% Save the original \section command
-\let\oldsection\section
-\makeatletter
-\def\qsection{%
-  \@ifstar{\@Starred}{\@nonStarred}%
-}
-\def\@Starred{%
-  \@ifnextchar[%
-  {\GenericWarning{}{Warning: A starred section can not have parameters. I am going to ignore them!}\@StarredWith}%
-  {\@StarredWithout}%
-}
-\def\@StarredWith[#1]#2{%
-  \oldsection*{#2}%
-}
-\def\@StarredWithout#1{
-  \oldsection*{#1}%
-}
-\def\@nonStarred{%
-  \@ifnextchar[%
-  {\@nonStarredWith}%
-  {\@nonStarredWithout}%
-}
-\def\@nonStarredWith[#1]#2{%
-  \oldsection[#1]{#2}%
-  \sectiontolist{#1}%
-}
-\def\@nonStarredWithout#1{%
-  \oldsection{#1}%
-  \sectiontolist{#1}%
-}
-\makeatother
-
-
 % Command to add a question to the List of Questions
 \newcommand{\addtolist}[1]{%
   \addcontentsline{qus}{questions}{Question \protect\numberline{\thetcbcounter} : \,#1}%
-
 }
 
-% Define the \qs command to automatically add questions to the list
 \newcommand{\qs}[2]{\begin{question}{#1}{}#2\addtolist{#1}\end{question}}
+
+
 
 %================================
 % DEFINITION BOX
