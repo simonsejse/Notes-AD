@@ -1,5 +1,18 @@
 
-!So, writing should be done without ur wrists touching the table or the wrist pad. This is to avoid RSI.\\
+
+\section{Rules of arithmetic}
+\subsection{Logarithms}
+
+\begin{align}
+  (\log_b(x))^a     & = \log_b(x^a)           \\
+  \log_b(x^a)       & = a \cdot \log_b(x)     \\
+  \log_b(x \cdot y) & = \log_b(x) + \log_b(y) \\
+  \log_b(x / y)     & = \log_b(x) - \log_b(y) \\
+  \log_b(1)         & = 0                     \\
+  \log_b(b)         & = 1                     \\
+  \log_b(b^x)       & = x                     \\
+  b^{\log_b(x)}     & = x
+\end{align}
 
 \section{5/2: Introduction, Proofs, Loop Invariants, CLRS 2.1}
 \addquestionsection{5/2: Introduction, Proofs, Loop Invariants}
@@ -329,6 +342,28 @@ In practice the notation is often used to denote a (unnamed) function, e.g.:
 
 
 \subsection{Exercises}
+\qs{Time Complexity and Asymptotic Notation}{
+  Determine the whether the functions below are \(O\), \(\Omega\), or \(\Theta\) of the other functions.
+}
+
+\begin{center}
+  \begin{tabular}{m{6cm} c c}
+    \textbf{Statement}                          & \textbf{Yes} & \textbf{No} \\
+    \hline \vspace*{0.2em}
+    $(\log n)^2$ is $O(n^2)$                    & \cancel{Yes} & No          \\
+    $n \cdot \log n$ is $O(n^2)$                & \cancel{Yes} & No          \\
+    $\sqrt{n}$ is $O((\log n)^3)$               & Yes          & No          \\
+    $1 + \log(n^2)$ is $O((\log n)^2)$          & Yes          & No          \\
+    $\log n + \log(n!)$ is $O(n^2)$             & Yes          & No          \\
+    $n^3$ is $O(n)$                             & Yes          & No          \\
+    $\sqrt{n} \cdot \log n$ is $O(n)$           & Yes          & No          \\
+    $n^3$ is $O(\log(n!))$                      & Yes          & No          \\
+    $n^2$ is $O(n^{2/3})$                       & Yes          & No          \\
+    $7\log n + \log(n!)$ is $O(n \cdot \log n)$ & Yes          & No          \\
+    $2\log n$ is $\Omega(n^{0.01})$             & Yes          & No          \\
+    $(\log n)^3 + 3^n$ is $\Omega(2^n)$         & Yes          & No          \\
+  \end{tabular}
+\end{center}
 
 \section{12/2: Divide and Conquer, Recursion Equations, and Lower Bound for Sorting, CLRS 2.3, 4 up to 4.5, pages 157-160, 8.1}
 \section{14/2: Amortized Analysis, CLRS 16}
