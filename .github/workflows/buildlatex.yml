@@ -3,8 +3,6 @@ on:
   push:
     paths-ignore:
       - root.pdf
-  schedule:
-    - cron: '0 22 * * *'
 
 jobs:
   build_latex:
@@ -17,12 +15,12 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex
+          root_file: root.tex
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
           name: PDF
-          path: paper.pdf
+          path: root.pdf
       - name: Commit and push PDF
         run: |
           git config --local user.email "action@github.com"
